@@ -1,3 +1,5 @@
+# Adiciona valores a uma lista e mostra ao usuário, 
+# só para se de ser adicionado valores quando o usúario pedir
 lista = []
 
 while True:
