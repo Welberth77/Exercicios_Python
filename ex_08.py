@@ -1,5 +1,5 @@
-'''Crie um programa que leia nome e duas notas de vários alunos e guarde tudo em uma lista composta. 
-No final, mostre um boletim contendo a média de cada um e permita que o usuário possa mostrar as notas de cada aluno individualmente.'''
+'''programa lê o nome e duas notas de vários alunos e guarda tudo em uma lista composta. 
+No final, mostra um boletim contendo a média de cada um e permita que o usuário possa mostrar as notas de cada aluno individualmente.'''
 
 dados = [[], [], []]
 
@@ -14,7 +14,7 @@ while True:
     if nota2 >= 0 and nota2 <= 10:
         dados[2].append(nota2)
     
-    resposta = input('Quer continuar? [S/N]: ')
+    resposta = input('Quer continuar? [S/N]: ').upper()[0]
     if resposta in 'Nn':
         break
 
@@ -32,3 +32,7 @@ while True:
         print(f'O aluno de código {verificar_aluno} não está no banco de dados')
     else:
         print(f'As notas de {dados[0][verificar_aluno-1]} são {dados[1][verificar_aluno-1]} e {dados[2][verificar_aluno-1]}')
+        if (dados[1][verificar_aluno-1] + dados[2][verificar_aluno-1]) / 2 >= 6:
+            print('O aluno está aprovado')
+        else:
+            print('O aluno está em recuperação!')
