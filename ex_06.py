@@ -1,4 +1,4 @@
-# Sistema de marcação de gols de um jogador, cadastra o jogador, gols e partidas
+# Sistema de marcação de gols de um jogador, cadastra o jogador, gols e partidas.
 jogador = dict()
 time = list()
 partidas = list()
@@ -45,4 +45,4 @@ while True:
         for i, g in enumerate(time[busca-1]['gols']):
             print(f' Na partida {i+1} fez {g} gols. ')
     print('-' * 40)
-print('<< ENCERRADO >>')
+print('<< ENCERRADO! >>')
