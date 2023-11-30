@@ -27,7 +27,7 @@ def calcular_custo_compra(loc):
 
     custo_total = preço_predio.preço_compra
     for comodo, custo in custos_comodos.items():
-        custo_total += custo 
+        custo_total += custo
 
     return custo_total
 
@@ -54,7 +54,7 @@ def calcular_custo_aluguel(loc):
     custo_total = preço_predio.preço_aluguel
     for comodo, custo in custos_comodos.items():
         custo_total += custo
-    
+
     return custo_total
 
 # Informações do comprador
@@ -72,13 +72,18 @@ lista_clientes = list()
 
 while True:
   # Mostrando opções ao usuário
-    print('=' * 15, 'BEM-VINDO','=' * 15)
+  # Mostra os 'Requisitos' na cor verde
+    print('\033[0;49;34m==' * 8, 'BEM-VINDO A WIRP', '==' * 8, '\033[m', end='')
+    # Retorna a cor ao padrão
+    print('\033[0;0m ')
+
+    print('Vamos começar o seu cadastro')
     print('Para começarmos escolha a localização desejada para o seu apartamento!')
     print('''ESCOLHA A LOCALIZAÇÃO:
     [1] PRAIA
     [2] CENTRO
     [3] INTERIOR
-    [4] PRAIA E CENTRO)''')
+    [4] PRAIA E CENTRO''')
 
     # Pedindo a localização ao usuário e validando valores
     while True:
@@ -100,7 +105,6 @@ while True:
     dados_cliente['Data de nascimento'] = str(input('Data de nascimento: '))
     dados_cliente['RG'] = str(input('RG: '))
     dados_cliente['Telefone'] = str(input('Telefone: '))
-    lista_clientes.append(dados_cliente.copy())
 
   # Armazenando valores
     comprador1 = Comprador(dados_cliente['CPF'], dados_cliente['Data de nascimento'], dados_cliente['RG'], dados_cliente['Nome'], dados_cliente['Telefone'])
@@ -117,6 +121,7 @@ while True:
         print('Erro!, a opção deve ser 1 ou 2')
 
     # Pede os requisitos do apartamento ao usuário
+    print('O máximo de cômodos por apartamento deve ser 8')
     while True:
         quarto = int(input('Quantos quartos: '))
         sala = int(input('Quantas salas: '))
@@ -124,12 +129,15 @@ while True:
         cozinha = int(input('Quantas cozinhas: '))
 
         # Maximo de 6 cômodos por apartamento
-        # A Soma de todos os requisitos tem que ser igual ou menor que 6
+        # A Soma de todos os requisitos tem que ser igual ou menor que 8
         total_requisitos = quarto + sala + banheiro + cozinha
-        if total_requisitos > 6:
-            print('O máximo de cômodos por apartamento deve ser 6. Por favor, ajuste os requisitos.')
+        if total_requisitos > 8:
+            print('O máximo de cômodos por apartamento deve ser 8. Por favor, ajuste os requisitos.')
         else:
             break
+
+    # Armazenando valores
+    dados_cliente['requisitos'] = {'quarto': quarto, 'sala': sala, 'banheiro': banheiro, 'cozinha': cozinha}
 
     # Preço de venda e aluguel diferentes
     if escolha == 1:
@@ -138,10 +146,16 @@ while True:
         custo_total = calcular_custo_aluguel(loc)
     print(f'O custo total do apartamento é R$ {custo_total:.2f}')
 
-    comprador1.custo_apartamento = custo_total
+    # Armazenando valores
+    dados_cliente['custo_apartamento'] = custo_total
+    lista_clientes.append(dados_cliente.copy())
 
     # Verifica se quer cadastrar mais algum cliente
-    print('-=' * 30)
+    # Mostra linha na cor verde
+    print('\033[0;49;92m-=' * 30, '\033[m', end='')
+    # Retorna a cor ao padrão
+    print('\033[0;0m ')
+
     resp = str(input('Deseja cadastrar mais algum cliente? [S/N] ')).upper()[0]
     if resp in 'Nn':
         break
@@ -158,7 +172,7 @@ for k, v in enumerate(lista_clientes):
 # Se o usuário quiser mais detalhes, pode escolher um código específico
 while True:
     detalhes_cliente = int(input('Digite o código do cliente para obter mais detalhes ou digite [0] para sair: '))
-    
+
     if detalhes_cliente == 0:
         break
     elif detalhes_cliente > len(lista_clientes):
@@ -167,10 +181,11 @@ while True:
         detalhes_cliente = int(detalhes_cliente)
         cliente_selecionado = lista_clientes[detalhes_cliente - 1]
 
-        print(f'\n-=- Detalhes do Cliente {detalhes_cliente} -=-')
+        print('-=' * 6, f'Detalhes do Cliente {detalhes_cliente}', '-=-' * 6)
         print(f'Nome: {cliente_selecionado["Nome"]}')
         print(f'CPF: {cliente_selecionado["CPF"]}')
         print(f'Data de nascimento: {cliente_selecionado["Data de nascimento"]}')
         print(f'RG: {cliente_selecionado["RG"]}')
         print(f'Telefone: {cliente_selecionado["Telefone"]}')
-        print(f'Custo do apartamento: R$ {comprador1.custo_apartamento:.2f}')
+        print(f'Custo do apartamento: R$ {cliente_selecionado["custo_apartamento"]:.2f}')
+        print()
